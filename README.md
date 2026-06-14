@@ -1,100 +1,86 @@
-# Walkathon Check-in System
+# 💛 Spread Kindness
 
-A beautiful, responsive check-in system for walkathon participants using Google Sheets.
+A simple web app where anyone with the link can share an act of kindness they performed or witnessed.
+Submissions save to a Google Sheet you own. Built with plain HTML, CSS, and JavaScript — no frameworks, no server.
 
-**✨ Features:**
-- 🔍 Search by last name (first few letters)
-- 👨‍👩‍👧‍👦 Automatic family grouping
-- ✅ Bulk check-in for multiple family members
-- 📊 Live check-in counter at the top
-- 🔄 Auto-updates your Google Sheet
-- 📱 Fully responsive (desktop, tablet, mobile)
-- 🎨 Modern, intuitive UI
-- ⚡ Fast and smooth experience
+**Live site:** `https://<your-github-username>.github.io/Project-SpreadKindness/`
 
-## Quick Start (5 Minutes)
+---
 
-1. **Prepare your Google Sheet** with columns: ID, First Name, Last Name, ..., Check-in Status
-2. **Get Google API credentials** (Sheet ID and API Key)
-3. **Open `index.html`** in your browser
-4. **Enter your credentials** and you're ready!
+## What it does
 
-👉 **Read [QUICKSTART.md](QUICKSTART.md) for step-by-step instructions**
+- Anyone with the link can submit a kindness act
+- Works for **self-reporting** ("I did something kind") or **reporting someone else** (reporter can stay anonymous)
+- Always captures the name of the person who did the kind act
+- Shows a live count of all acts shared so far
+- All data saves instantly to a Google Sheet you own
 
-## File Structure
+---
 
+## Google Sheet columns
+
+| # | Timestamp | Kind Person's Name | Act of Kindness | Reported By | Reporting Type |
+|---|-----------|-------------------|-----------------|-------------|----------------|
+| 1 | 2024-01-15 10:30:00 | Priya Sharma | Helped carry groceries for an elderly neighbor | Priya Sharma | Self |
+| 2 | 2024-01-15 11:45:00 | Ravi Kumar | Left an encouraging note on a coworker's desk | Anonymous | On Behalf Of |
+
+---
+
+## Setup (~10 minutes, one time)
+
+### Step 1 — Create a Google Sheet
+
+Go to [sheets.google.com](https://sheets.google.com), create a blank sheet, and leave it empty.
+The script will add the header row automatically on first use.
+
+### Step 2 — Add the Apps Script backend
+
+1. In your Google Sheet → **Extensions → Apps Script**
+2. Delete any existing code
+3. Copy everything from `apps-script.js` in this repo and paste it in
+4. Save with **Ctrl + S**
+
+### Step 3 — Deploy as a Web App
+
+1. Click **Deploy → New Deployment**
+2. Click the gear icon → select **Web app**
+3. **Execute as:** Me
+4. **Who has access:** Anyone
+5. Click **Deploy** and copy the URL shown
+   (looks like `https://script.google.com/macros/s/ABC.../exec`)
+
+### Step 4 — Connect the URL to the web page
+
+Open `script.js` and replace line 2:
+
+```js
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_ID/exec';
 ```
-check-in/
-├── index.html              # Main page
-├── style.css              # All styling
-├── script.js              # All functionality
-├── QUICKSTART.md          # 5-min setup guide
-├── README-SETUP.md        # Detailed setup & troubleshooting
-└── README.md              # This file
-```
 
-## How It Works
+Commit and push that change.
 
-1. **Search** participants by last name
-2. **Select** family members (multiple at once)
-3. **Check-in** updates Google Sheet instantly
-4. **Counter** shows progress in real-time
-5. **Undo** if needed
+### Step 5 — Enable GitHub Pages
 
-## Architecture
+**Repo → Settings → Pages → Source: main branch, / (root) → Save**
 
-- **100% Static** - No server needed
-- **No Backend** - Direct Google Sheets API integration
-- **Browser-based** - Runs entirely in your browser
-- **LocalStorage** - Saves configuration locally
-- **Real-time** - Updates Google Sheet on every check-in
+Your form will be live at `https://<username>.github.io/Project-SpreadKindness/`
 
-## Setup Requirements
+---
 
-- Google Sheet with participant data
-- Google API Key (free)
-- Modern web browser
-- Internet connection
+## Files
 
-## Documentation
+| File | Purpose |
+|------|---------|
+| `index.html` | The form page |
+| `style.css` | All visual styling |
+| `script.js` | Form logic and Google Sheets communication |
+| `apps-script.js` | Paste this into Google Apps Script |
 
-- **[QUICKSTART.md](QUICKSTART.md)** - Get started in 5 minutes
-- **[README-SETUP.md](README-SETUP.md)** - Complete setup guide + troubleshooting
-- **[LICENSE](LICENSE)** - License information
+---
 
-## Hosting
+## Tech stack
 
-Host for free on:
-- **GitHub Pages** - Perfect for events
-- **Vercel** - Zero-config deployment
-- **Netlify** - Drag & drop deployment
-- **Any static hosting** - Just push the files
-
-## Browser Support
-
-Works on all modern browsers:
-- ✅ Chrome/Chromium
-- ✅ Firefox
-- ✅ Safari
-- ✅ Edge
-- ✅ Mobile browsers
-
-## Privacy & Security
-
-- Configuration stored in **browser localStorage** (not sent to any server)
-- Direct connection to Google Sheets API
-- No data collection or analytics
-- API Key can be rotated anytime
-- Static site - no backend to compromise
-
-## Tips for Success
-
-- Test with sample data first
-- Do a check-in before the event
-- Use local server for best experience
-- Keep Sheet ID and API Key handy
-- Have stable internet during event
-
-## License
-
-Free to use and modify for your walkathon or event!
+- **Frontend:** HTML5, CSS3, Vanilla JavaScript
+- **Backend:** Google Apps Script (serverless, free)
+- **Database:** Google Sheets
+- **Hosting:** GitHub Pages (free)

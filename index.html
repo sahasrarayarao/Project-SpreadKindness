@@ -3,52 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walkathon Check-in System</title>
+    <title>Spread Kindness 💛</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header with Count -->
-        <div class="header">
-            <h1>Walkathon Check-in</h1>
-            <div class="count-box">
-                <div class="count-label">Checked In</div>
-                <div class="count-number" id="checkedInCount">0</div>
-                <div class="count-label">of <span id="totalCount">0</span></div>
+    <div class="page-wrapper">
+
+        <!-- Hero Header -->
+        <header class="hero">
+            <div class="hero-icon">💛</div>
+            <h1>Spread Kindness</h1>
+            <p class="hero-subtitle">Share an act of kindness you did or witnessed</p>
+            <div class="count-pill">
+                <span class="count-number" id="totalCount">—</span>
+                <span class="count-label">acts of kindness shared</span>
             </div>
-        </div>
+        </header>
 
-        <!-- Search Section -->
-        <div class="search-section">
-            <input 
-                type="text" 
-                id="searchInput" 
-                placeholder="Search by first or last name (1+ letters)..."
-                class="search-input"
-                autocomplete="off"
-            >
-            <div class="search-info" id="searchInfo"></div>
-        </div>
+        <!-- Main Form Card -->
+        <main class="card" id="formCard">
+            <form id="kindnessForm" novalidate>
 
-        <!-- Results Section -->
-        <div class="results-section">
-            <div id="resultsList" class="results-list"></div>
-            <div id="noResults" class="no-results" style="display: none;">
-                <p>No participants found. Try searching again.</p>
+                <!-- Step 1: Who performed the act? -->
+                <fieldset class="form-section">
+                    <legend class="section-label">Who performed this act of kindness?</legend>
+                    <div class="choice-row">
+                        <button type="button" class="choice-btn" id="choiceMyself"
+                                onclick="selectReporter('myself')">
+                            <span class="choice-icon">🌟</span>
+                            <strong>I did it</strong>
+                            <small>Sharing my own act</small>
+                        </button>
+                        <button type="button" class="choice-btn" id="choiceSomeone"
+                                onclick="selectReporter('someone')">
+                            <span class="choice-icon">👀</span>
+                            <strong>Someone else</strong>
+                            <small>I saw or heard about it</small>
+                        </button>
+                    </div>
+                </fieldset>
+
+                <!-- Step 2: Details (revealed after choice) -->
+                <div id="formDetails" class="form-details" aria-hidden="true">
+
+                    <!-- Kind person's name -->
+                    <div class="form-group">
+                        <label class="field-label" id="kindPersonLabel" for="kindPersonName">
+                            Your name <span class="required">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="kindPersonName"
+                            class="field-input"
+                            placeholder="e.g., Priya Sharma"
+                            autocomplete="name"
+                            maxlength="100"
+                        >
+                        <p class="field-hint" id="kindPersonHint">The person who performed the kind act</p>
+                    </div>
+
+                    <!-- Act description -->
+                    <div class="form-group">
+                        <label class="field-label" for="actDescription">
+                            What was the act of kindness? <span class="required">*</span>
+                        </label>
+                        <textarea
+                            id="actDescription"
+                            class="field-textarea"
+                            placeholder="Describe what happened... even small acts make a big difference!"
+                            rows="4"
+                            maxlength="500"
+                        ></textarea>
+                        <p class="field-hint char-count"><span id="charCount">0</span> / 500</p>
+                    </div>
+
+                    <!-- Reporter section — only shown when "someone else" is chosen -->
+                    <div id="reporterSection" hidden>
+                        <div class="section-divider">
+                            <span>About you — the reporter</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label" for="submitterName">
+                                Your name
+                                <span class="optional">(optional — you can stay anonymous)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="submitterName"
+                                class="field-input"
+                                placeholder="Leave blank to stay anonymous"
+                                autocomplete="name"
+                                maxlength="100"
+                            >
+                            <p class="anon-note">
+                                🤫 Completely fine to stay anonymous — we just want to
+                                celebrate the kind person!
+                            </p>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        Share This Kindness ❤️
+                    </button>
+
+                </div>
+
+            </form>
+        </main>
+
+        <!-- Success Screen -->
+        <div class="card success-card" id="successCard" hidden>
+            <div class="success-icon">🎉</div>
+            <h2>Thank You!</h2>
+            <p class="success-msg">This act of kindness has been recorded and celebrated.</p>
+            <div class="success-count-box">
+                Together we've shared
+                <strong id="newTotalCount">—</strong>
+                acts of kindness!
             </div>
+            <button class="submit-btn secondary" onclick="resetForm()">
+                Share Another ❤️
+            </button>
         </div>
 
-        <!-- Loading Indicator -->
-        <div id="loadingIndicator" class="loading" style="display: none;">
-            <p>Loading data...</p>
+        <!-- Error Banner -->
+        <div class="error-banner" id="errorBanner" hidden role="alert">
+            <span id="errorText">Something went wrong. Please try again.</span>
+            <button class="error-close" onclick="dismissError()" aria-label="Dismiss">×</button>
         </div>
 
-        <!-- Error Message -->
-        <div id="errorMessage" class="error-message" style="display: none;"></div>
+        <footer class="page-footer">
+            Made with ❤️ to celebrate everyday kindness
+        </footer>
 
-        <!-- Setup Instructions (hidden by default) -->
-        <div id="setupInstructions" class="setup-instructions" style="display: none;">
-        </div>
     </div>
 
     <script src="script.js"></script>
