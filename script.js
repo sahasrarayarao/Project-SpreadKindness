@@ -180,13 +180,13 @@ function resetForm() {
 function showError(message) {
     document.getElementById('errorText').textContent = message;
     const banner = document.getElementById('errorBanner');
-    banner.hidden = false;
+    banner.classList.add('visible');
     clearTimeout(banner._timer);
-    banner._timer = setTimeout(() => { banner.hidden = true; }, 7000);
+    banner._timer = setTimeout(() => { banner.classList.remove('visible'); }, 7000);
 }
 
 function dismissError() {
-    document.getElementById('errorBanner').hidden = true;
+    document.getElementById('errorBanner').classList.remove('visible');
 }
 
 function isConfigured() {

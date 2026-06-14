@@ -349,12 +349,16 @@ fieldset {
     color: #C0392B;
     padding: 14px 18px;
     border-radius: 13px;
-    display: flex;
+    display: none;            /* hidden by default */
     justify-content: space-between;
     align-items: center;
     gap: 12px;
     font-size: 14px;
     line-height: 1.4;
+}
+
+.error-banner.visible {
+    display: flex;
 }
 
 .error-close {
