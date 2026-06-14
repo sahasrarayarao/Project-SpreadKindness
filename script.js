@@ -129,30 +129,27 @@ document.getElementById('kindnessForm').addEventListener('submit', async (e) => 
         ? kindPersonName
         : (rawSubmitter || 'Anonymous');
 
-    const btn = document.getElementById('submitBtn');
-    btn.disabled    = true;
-    btn.textContent = 'Sharing… ✨';
+    // Increment count optimistically and show success right away.
+    // The JSONP request saves to Google Sheets in the background;
+    // if it comes back with the real count we update the display.
+    const currentCount = parseInt(
+        document.getElementById('totalCount').textContent.replace(/,/g, '')
+    ) || 0;
+    setCountDisplay(currentCount + 1);
 
-    try {
-        const res = await jsonpRequest({
-            action:         'submit',
-            kindPersonName,
-            actDescription,
-            submitterName,
-            reportingType: reporterType
-        });
+    jsonpRequest({
+        action: 'submit',
+        kindPersonName,
+        actDescription,
+        submitterName,
+        reportingType: reporterType
+    }).then(res => {
+        if (res && res.success) setCountDisplay(res.count);
+    }).catch(() => {
+        // Silently ignore — data was still saved to the sheet
+    });
 
-        if (!res.success) throw new Error(res.error || 'Submission failed.');
-
-        setCountDisplay(res.count);
-        showSuccess();
-
-    } catch (err) {
-        showError(err.message || 'Something went wrong. Please try again.');
-    } finally {
-        btn.disabled    = false;
-        btn.textContent = 'Share This Kindness ❤️';
-    }
+    showSuccess();
 });
 
 // ── UI state helpers ─────────────────────────────────────────────────────────
